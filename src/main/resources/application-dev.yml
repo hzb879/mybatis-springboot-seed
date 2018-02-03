@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://10.10.1.107:3306/mybatis_springboot_test
+    username: ucbyun_das
+    password: swk2016@GZ
+    driver-class-name: com.mysql.jdbc.Driver
