@@ -1,17 +1,7 @@
 package com.company.project.config;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -27,31 +17,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
 
-    /**
-     * Error Attributes in the Application
-     */
-    @Autowired
-    private ErrorAttributes errorAttributes;
-
-    
-    //统一异常处理
-    @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-        exceptionResolvers.add(new HandlerExceptionResolver() {
-			@Override
-			public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
-					Object handler, Exception ex) {
-				System.out.println("异常");
-				System.out.println(getStatus(request));
-				return new ModelAndView();
-			}
-        });
-    }
 
     //解决跨域问题
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        //registry.addMapping("/**");
+        registry.addMapping("/**");
     }
 
     //添加拦截器
@@ -62,12 +32,5 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
           
         }
     }
-    private HttpStatus getStatus(HttpServletRequest request) {
-        Integer statusCode = (Integer) request
-                .getAttribute("javax.servlet.error.status_code");
-        if (statusCode != null) {
-            return HttpStatus.valueOf(statusCode);
-        }
-        return HttpStatus.INTERNAL_SERVER_ERROR;
-    }
+    
 }

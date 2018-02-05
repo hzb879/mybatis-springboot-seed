@@ -4,3 +4,8 @@ spring:
     username: ucbyun_das
     password: swk2016@GZ
     driver-class-name: com.mysql.jdbc.Driver
+logging:
+  level:
+    com.company.project.dao: trace
+   
+    
